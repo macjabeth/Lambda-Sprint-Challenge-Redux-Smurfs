@@ -5,38 +5,39 @@ import styled, { css } from 'styled-components';
 import { darken, lighten } from 'polished';
 import { useInput } from '../hooks';
 
-const SmurfForm = ({ history, location }) => {
+const SmurfForm = ({ addSmurf, updateSmurf, history, location }) => {
   const [name, setName, updateName] = useInput();
   const [age, setAge, updateAge] = useInput();
   const [height, setHeight, updateHeight] = useInput();
-  let capturedID = false;
+  const [capturedID, setCapturedID] = useInput();
 
   useEffect(() => {
     const { state } = location;
     if (state) {
+      console.log(state);
       const [id, name, age, height] = state;
       setName(name);
       setAge(age);
       setHeight(height);
-      capturedID = id;
+      setCapturedID(id);
     }
-  });
+  }, []);
 
   const submitSmurf = e => {
     e.preventDefault();
 
     const smurfy = { name, age, height };
+    const submit = capturedID ? updateSmurf : addSmurf;
+    const args = capturedID ? [capturedID, smurfy] : [smurfy];
 
-    if (typeof capturedID === 'number') {
-      updateSmurf(capturedID, smurfy).then(() => history.push('/'));
-    } else {
-      addSmurf(smurfy).then(() => history.push('/'));
-    }
+    submit(...args).then(() => history.push('/'));
 
     setName('');
     setAge('');
     setHeight('');
   };
+
+  const cta = capturedID ? 'Update Smurf' : 'Add Smurf';
 
   return (
     <div>
@@ -60,7 +61,7 @@ const SmurfForm = ({ history, location }) => {
           placeholder="height"
           value={height}
         />
-        <Input type="submit" value="Add Smurf" />
+        <Input type="submit" value={cta} />
       </Form>
     </div>
   );

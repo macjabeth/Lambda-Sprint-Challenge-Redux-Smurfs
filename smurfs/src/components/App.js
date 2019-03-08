@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
-import { connect } from 'react-redux';
 
 import Smurfs from './Smurfs';
 import SmurfForm from './SmurfForm';
@@ -35,14 +34,6 @@ const GlobalStyles = createGlobalStyle`
     background-color: #75ABBC;
     color: #071013;
   }
-`;
-
-const LoadingWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
 `;
 
 const Header = styled.header`
