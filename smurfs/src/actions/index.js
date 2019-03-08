@@ -16,7 +16,7 @@ export const SMURF_ADD_SUCCESS = 'SMURF_ADD_SUCCESS';
 export const SMURF_ADD_FAILURE = 'SMURF_ADD_FAILURE';
 export const addSmurf = frenn => dispatch => {
   dispatch({ type: SMURF_ADD_START });
-  axios
+  return axios
     .post('/smurfs', frenn)
     .then(({ data }) => dispatch({ type: SMURF_ADD_SUCCESS, data }))
     .catch(err => dispatch({ type: SMURF_ADD_FAILURE, err }));
@@ -27,7 +27,7 @@ export const SMURF_UPDATE_SUCCESS = 'SMURF_UPDATE_SUCCESS';
 export const SMURF_UPDATE_FAILURE = 'SMURF_UPDATE_FAILURE';
 export const updateSmurf = (id, frenn) => dispatch => {
   dispatch({ type: SMURF_UPDATE_START });
-  axios
+  return axios
     .post(`/smurfs/${id}`, frenn)
     .then(({ data }) => dispatch({ type: SMURF_UPDATE_SUCCESS, data }))
     .catch(err => dispatch({ type: SMURF_UPDATE_FAILURE, err }));

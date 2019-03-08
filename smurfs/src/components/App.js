@@ -1,35 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { connect } from 'react-redux';
-import Loader from 'react-loader-spinner';
 
-const App = ({ status, error }) =>
-  error ? (
-    <p>{error}</p>
-  ) : status === 'fetching smurfs' ? (
-    <LoadingWrapper>
-      <Loader type="Puff" color="#00BFFF" height="100" width="100" />
-    </LoadingWrapper>
-  ) : (
-    <React.Fragment>
-      <GlobalStyles />
+import Smurfs from './Smurfs';
+import SmurfForm from './SmurfForm';
 
-      <Header>
-        <NavBar>
-          <NavLink exact to="/">
-            Home
-          </NavLink>
-          <NavLink to="/smurf-form">Create</NavLink>
-        </NavBar>
-      </Header>
+const App = () => (
+  <React.Fragment>
+    <GlobalStyles />
 
-      <Main>
-        <Route exact path="/" component={Smurfs} />
-        <Route path="/smurf-form" component={SmurfForm} />
-      </Main>
-    </React.Fragment>
-  );
+    <Header>
+      <NavBar>
+        <NavLink exact to="/">
+          Home
+        </NavLink>
+        <NavLink to="/smurf-form">Create</NavLink>
+      </NavBar>
+    </Header>
+
+    <Main>
+      <Route exact path="/" component={Smurfs} />
+      <Route path="/smurf-form" component={SmurfForm} />
+    </Main>
+  </React.Fragment>
+);
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -77,9 +72,4 @@ const Main = styled.main`
   padding: 1rem;
 `;
 
-const mapStateToProps = ({ status, error }) => ({
-  status,
-  error
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
