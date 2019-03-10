@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const uuidv4 = require('uuid/v4');
 const port = 3333;
 
 const server = express();
@@ -14,25 +15,26 @@ const sendUserError = (msg, res) => {
 
 let smurfs = [
   {
+    id: uuidv4(),
     name: 'Brainey',
     age: 200,
     height: '5cm'
   }
 ];
+
 server.get('/smurfs', (req, res) => {
   res.json(smurfs);
 });
-let smurfId = 0;
 
 server.post('/smurfs', (req, res) => {
   const { name, age, height } = req.body;
-  const newSmurf = { name, age, height, id: smurfId };
   if (!name || !age || !height) {
     return sendUserError(
       'Ya gone did smurfed! Name/Age/Height are all required to create a smurf in the smurf DB.',
       res
     );
   }
+  const newSmurf = { id: uuidv4(), name, age, height };
   const findSmurfByName = smurf => {
     return smurf.name === name;
   };
@@ -44,7 +46,6 @@ server.post('/smurfs', (req, res) => {
   }
 
   smurfs.push(newSmurf);
-  smurfId++;
   res.json(smurfs);
 });
 
